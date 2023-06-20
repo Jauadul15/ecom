@@ -180,8 +180,19 @@ exports.UpdateUser=async (req,res)=>{
 
 exports.profileDetails=async (req,res)=>{
     try {
+        const user=await User.findById(req.user._id)
+        if(!user){
+            return res.json({
+                error:"User not found"
+            })
+        }
+        user.password=undefined
+        res.json(user);
 
     }catch(error) {
-
+        return res.json({
+            error:"something went wrong"
+        })
     }
 }
+
